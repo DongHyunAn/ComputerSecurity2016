@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_radius_rec">
+
+        <ImageView
+            android:layout_width="176dp"
+            android:layout_height="246dp"
+            android:id="@+id/item_oc_card"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

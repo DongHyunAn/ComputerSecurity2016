@@ -1,0 +1,425 @@
+﻿<UserControl x:Class="Sticker.PC.Module.App.Radio.Views.RadioMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sticker.PC.Module.App.Radio.Views"
+             xmlns:com="clr-namespace:Sticker.PC.Module.App.Radio.ValueConverter"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <UserControl.Resources>
+        <com:FalseToVisibleConverter x:Key="ConvertFalseToVisibleConverter"/>
+        <com:TrueToVisibleConverter x:Key="ConvertTrueToVisibleConverter"/>
+        <SolidColorBrush x:Key="BackGroundWhiteOpacity" Color="White" Opacity="0.2"/>
+        <SolidColorBrush x:Key="BackGroundWhiteOpacity2" Color="White" Opacity="0.1"/>
+        <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border Background="#C7C7C7"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border SnapsToDevicePixels="True" Background="#FF4545" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderThumb" TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse Height="38" Width="38" VerticalAlignment="Stretch" Margin="0,-13">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Sticker.PC.Infra;component/Resources/Images/Radio/sound_slide.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="Slider"  TargetType="Slider">
+            <Grid>
+                <!--<Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" 
+                                   MinHeight="{TemplateBinding MinHeight}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>-->
+                <Track Grid.Row="1" x:Name="PART_Track"   >
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource SliderThumb}"  />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton}" Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="CustomSlider" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="MinHeight" Value="4" />
+                    <Setter Property="MinWidth" Value="4" />
+                    <Setter Property="Template" Value="{StaticResource Slider}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Background="{StaticResource BackGroundWhiteOpacity}">
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/Global/background_main.png" Stretch="Fill" Tag="NN"/>
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/Radio/background.png" Stretch="Fill" />
+        
+        <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Visibility="Collapsed" Source="{Binding SelectedRadioChannel.ChannelStreamUri, Mode=OneWay}" LoadedBehavior="{Binding MediaState, Mode=TwoWay}" UnloadedBehavior="Manual" Volume="{Binding Volume}" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="BufferingEnded">
+                    <ei:CallMethodAction MethodName="BufferingEnded" TargetObject="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </MediaElement>
+        <StackPanel>
+            <Grid Height="393">
+                <StackPanel Orientation="Horizontal" Height="194" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Image Source="/Sticker.PC.Infra;component/Resources/Images/Radio/back.png" Height="91" Width="48" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <Image Source="/Sticker.PC.Infra;component/Resources/Images/Radio/next.png" Height="91" Width="48" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1000,0,0,0" />
+                </StackPanel>
+                <Grid Height="194" VerticalAlignment="Bottom" Background="{StaticResource BackGroundWhiteOpacity2}">
+                    <Grid >
+                        <Image Source="{Binding SelectedLogoFile}" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Height="239" HorizontalAlignment="Center">
+                <Image Source="/Sticker.PC.Infra;component/Resources/Images/Radio/mute.png" Width="44" HorizontalAlignment="Left"/>
+                <Slider Height="12" VerticalAlignment="Center" Width="739" Style="{DynamicResource CustomSlider}" Foreground="{x:Null}" Value="{Binding VolumeImage}" Margin="10,0"/>
+                <Image Source="/Sticker.PC.Infra;component/Resources/Images/Radio/speaker.png" Width="44" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <Grid Height="388">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <ListBox Background="Transparent" BorderThickness="0" Grid.ColumnSpan="5" Grid.RowSpan="2" 
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ListBoxItem Height="179" Width="1920" Background="{StaticResource BackGroundWhiteOpacity}"  IsEnabled="False"  >
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Grid.Column="0" Margin="34,0,0,0">
+
+                                <Image x:Name="img_channel_rectangle1"   Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[0]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle11"   Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[0]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[0].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                           FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="34,0,0,0">
+                                <Image x:Name="img_channel_rectangle2" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[1]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle12" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[1]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[1].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="34,0,0,0">
+                                <Image x:Name="img_channel_rectangle3" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[2]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle13" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[2]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[2].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Column="3" Margin="34,0,0,0">
+                                <Image x:Name="img_channel_rectangle4" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[3]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle14" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[3]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[3].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Column="4" Margin="34,0,0,0">
+                                <Image x:Name="img_channel_rectangle5" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[4]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle15" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[4]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[4].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                            		FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <ListBoxItem Height="179" Width="1920" Margin="0,30,0,0" Background="{StaticResource BackGroundWhiteOpacity}" IsEnabled="False" >
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Margin="34,0,0,0" Height="134" Width="343">
+                                <Image x:Name="img_channel_rectangle6" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[5]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle16" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[5]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[5].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Margin="34,0,0,0" Height="134" Width="343">
+                                <Image x:Name="img_channel_rectangle7" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[6]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle17" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[6]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[6].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Margin="34,0,0,0" Height="134" Width="343">
+                                <Image x:Name="img_channel_rectangle8" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[7]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle18" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[7]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[7].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Margin="34,0,0,0" Height="134" Width="343">
+                                <Image x:Name="img_channel_rectangle9" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[8]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle19" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[8]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[8].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Grid Margin="34,0,0,0" Height="134" Width="343">
+                                <Image x:Name="img_channel_rectangle10" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[9]}" Value="True">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Image x:Name="img_channel_rectangle20" Width="343" Height="134" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list1_ch_rectangle_select.png">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelectedChannelList[9]}" Value="False">
+                                                    <Setter Property="Visibility" Value="{Binding Converter={StaticResource ConvertTrueToVisibleConverter}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Background="Transparent" Text="{Binding RadioChannels[9].ChannelName}" FontFamily="NanumBarunGothic Regular" 
+                                	FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Background="Transparent" Text="TEST CH"  Margin="10,0" FontFamily="NanumBarunGothic Regular" 
+                                           FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Image Source="/Sticker.PC.Infra;component/Resources/Images/Radio/list_1_rectangle.png"/>
+                                <!--<TextBlock Background="Transparent" Text="{Binding ChannelText}"  Margin="10,0" 
+                                           FontFamily="NanumBarunGothic Regular" FontSize="60" HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

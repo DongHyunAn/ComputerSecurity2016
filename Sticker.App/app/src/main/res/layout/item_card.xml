@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="192.67dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="162.67dp"
+        android:layout_height="221.33dp"
+        android:scaleType="fitXY"
+        android:id="@+id/iv_item_card"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

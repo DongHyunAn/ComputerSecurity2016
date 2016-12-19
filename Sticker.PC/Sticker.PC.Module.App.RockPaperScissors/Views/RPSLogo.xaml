@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Sticker.PC.Module.App.RockPaperScissors.Views.RPSLogo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sticker.PC.Module.App.RockPaperScissors.Views"
+             
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             
+             mc:Ignorable="d" >
+    <Grid>
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/Global/background_main.png" Stretch="Fill" Tag="NO"/>
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/RPS/background.png" Stretch="Fill" Tag="IN"/>
+        
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/RPS/img_splash.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Width="1152" Height="1080"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sticker.App</string>
+
+    <string name="title_activity_music_controller">MusicControllerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

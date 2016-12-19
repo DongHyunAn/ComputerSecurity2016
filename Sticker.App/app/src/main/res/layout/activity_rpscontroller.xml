@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.cro.stickerapp.rpsModule.RPSControllerActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/img_RPScontroller_background"
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:layout_width="51.33dp"
+        android:layout_height="42dp"
+        android:id="@+id/img_RPScontroller_logo"
+        android:layout_marginLeft="18.67dp"
+        android:layout_marginTop="7.33dp" />
+
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:id="@+id/img_RPScontroller_back"
+        android:background="@android:color/transparent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="21.67dp"
+        android:layout_marginRight="21.33dp" />
+
+    <ImageView
+        android:layout_width="39dp"
+        android:layout_height="52dp"
+        android:id="@+id/img_RPScontroller_arrow"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_RPScontroller_cardList"
+        android:layout_marginBottom="40dp"
+        android:layout_centerHorizontal="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rel_RPScontroller_blackPanel"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha="0.7">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="236dp"
+            android:layout_height="182dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:id="@+id/rel_RPScontroller_popup">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_RPScontroller_popup_bg" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="게임이 끝났습니다. 계속 하시겠습니까?"
+                    android:id="@+id/textView3"
+                    android:textColor="@color/RPS_popupTextColor"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="14dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="46dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="16.33dp">
+
+                        <ImageButton
+                            android:layout_width="89.67dp"
+                            android:layout_height="25.33dp"
+                            android:id="@+id/ibtn_RPScontroller_popup_out"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="나가기"
+                            android:id="@+id/textView4"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/RPS_buttonTextColor"
+                            android:textStyle="bold"
+                            android:textSize="12dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:layout_width="89.67dp"
+                            android:layout_height="25.33dp"
+                            android:id="@+id/ibtn_RPScontroller_popup_retry"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="다시하기"
+                            android:id="@+id/textView5"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/RPS_buttonTextColor"
+                            android:textStyle="bold"
+                            android:textSize="12dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:id="@+id/rel_RPScontroller_popup2">
+
+            <ImageView
+                android:layout_width="236dp"
+                android:layout_height="93.67dp"
+                android:id="@+id/img_RPScontroller_popup2_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다른 플레이어를 기다립니다..."
+                android:id="@+id/textView2"
+                android:layout_centerInParent="true"
+                android:textColor="@color/RPS_popupTextColor" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

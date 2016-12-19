@@ -1,0 +1,17 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sticker.PC.Module.Initialize.Views"
+             x:Class="Sticker.PC.Module.Initialize.Views.Logo"
+             mc:Ignorable="d" 
+    
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/Initialize/background_logo.png" Stretch="Fill" Tag="IN"/> 
+        <Image Source="/Sticker.PC.Infra;component/Resources/Images/Initialize/logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Width="162" Height="108"/>
+    </Grid>
+    
+</UserControl>
